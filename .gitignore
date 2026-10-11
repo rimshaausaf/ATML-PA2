@@ -28,3 +28,5 @@ data/*
 # Misc
 *.zip
 .DS_Store
+outputs/
+outputs/
