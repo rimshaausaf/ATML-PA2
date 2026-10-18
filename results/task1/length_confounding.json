@@ -1,0 +1,20 @@
+{
+  "Standard": {
+    "strata_accuracy": {
+      "rejected_longer": 0.6835443037974683,
+      "preferred_longer": 0.6153846153846154,
+      "length_matched": 0.575
+    },
+    "word_limit_compliance_rate": 0.6,
+    "mean_generation_length": 50.2
+  },
+  "Length-Balanced": {
+    "strata_accuracy": {
+      "rejected_longer": 0.7468354430379747,
+      "preferred_longer": 0.5,
+      "length_matched": 0.6375
+    },
+    "word_limit_compliance_rate": 0.7,
+    "mean_generation_length": 45.0
+  }
+}
