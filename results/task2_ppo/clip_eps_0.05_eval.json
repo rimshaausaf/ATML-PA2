@@ -1,0 +1,13 @@
+{
+  "name": "clip_eps_0.05",
+  "mean_reward": 1.5166745758056641,
+  "std_reward": 1.5038103052263045,
+  "mean_effective_reward": 1.4316745758056642,
+  "mean_kl": 5.60217527954876e-05,
+  "mean_entropy": 0.5666405243705959,
+  "mean_length": 287.06,
+  "std_length": 250.7100644170473,
+  "iqr_length": 441.75,
+  "eos_termination_rate": 0.915,
+  "word_limit_compliance": 1.0
+}
