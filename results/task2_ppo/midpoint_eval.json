@@ -1,0 +1,13 @@
+{
+  "name": "midpoint",
+  "mean_reward": 1.4618744659423828,
+  "std_reward": 1.5692883121521668,
+  "mean_effective_reward": 1.3668744659423828,
+  "mean_kl": 5.670467724485206e-05,
+  "mean_entropy": 0.5614161104802042,
+  "mean_length": 291.795,
+  "std_length": 252.98779214618241,
+  "iqr_length": 442.75,
+  "eos_termination_rate": 0.905,
+  "word_limit_compliance": 1.0
+}
