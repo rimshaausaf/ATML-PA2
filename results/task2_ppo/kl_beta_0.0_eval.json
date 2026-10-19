@@ -1,0 +1,13 @@
+{
+  "name": "kl_beta_0.0",
+  "mean_reward": 1.515853338241577,
+  "std_reward": 1.5382781855620846,
+  "mean_effective_reward": 1.4258533382415772,
+  "mean_kl": 8.399567049821143e-05,
+  "mean_entropy": 0.5663262061960995,
+  "mean_length": 286.435,
+  "std_length": 249.7265820352331,
+  "iqr_length": 438.25,
+  "eos_termination_rate": 0.91,
+  "word_limit_compliance": 1.0
+}
