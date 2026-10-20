@@ -1,0 +1,82 @@
+[
+  {
+    "update": 1,
+    "task_reward": -1.8793811798095703,
+    "mean_kl": 6.6183081344206585e-06,
+    "policy_loss": -5.960464477539063e-08,
+    "entropy": 1.8685953617095947,
+    "response_length": 768.0,
+    "clip_fraction": 0.0,
+    "uninformative_fraction": 0.0
+  },
+  {
+    "update": 2,
+    "task_reward": -1.3599853515625,
+    "mean_kl": 6.101715200657054e-06,
+    "policy_loss": 0.0,
+    "entropy": 1.3518303036689758,
+    "response_length": 768.0,
+    "clip_fraction": 0.0,
+    "uninformative_fraction": 0.0
+  },
+  {
+    "update": 3,
+    "task_reward": -1.545562744140625,
+    "mean_kl": 1.1509429668876692e-05,
+    "policy_loss": 1.4901161193847656e-08,
+    "entropy": 2.233885705471039,
+    "response_length": 768.0,
+    "clip_fraction": 0.0,
+    "uninformative_fraction": 0.0
+  },
+  {
+    "update": 4,
+    "task_reward": -1.25897216796875,
+    "mean_kl": 6.658587778929359e-06,
+    "policy_loss": 1.4901161193847656e-08,
+    "entropy": 1.4506768584251404,
+    "response_length": 768.0,
+    "clip_fraction": 0.0,
+    "uninformative_fraction": 0.0
+  },
+  {
+    "update": 5,
+    "task_reward": -1.4600410461425781,
+    "mean_kl": 1.0433655234010075e-05,
+    "policy_loss": 1.4901161193847656e-08,
+    "entropy": 2.41458597779274,
+    "response_length": 768.0,
+    "clip_fraction": 0.0,
+    "uninformative_fraction": 0.0
+  },
+  {
+    "update": 6,
+    "task_reward": -1.3005905151367188,
+    "mean_kl": 8.189886045784078e-06,
+    "policy_loss": 0.0,
+    "entropy": 1.7002065926790237,
+    "response_length": 768.0,
+    "clip_fraction": 0.0,
+    "uninformative_fraction": 0.0
+  },
+  {
+    "update": 7,
+    "task_reward": -1.2444839477539062,
+    "mean_kl": 8.697854525507864e-06,
+    "policy_loss": -1.4901161193847656e-08,
+    "entropy": 2.058369591832161,
+    "response_length": 768.0,
+    "clip_fraction": 0.0,
+    "uninformative_fraction": 0.0
+  },
+  {
+    "update": 8,
+    "task_reward": -1.4397144317626953,
+    "mean_kl": 8.274005722341826e-06,
+    "policy_loss": 7.450580596923828e-09,
+    "entropy": 1.7625795602798462,
+    "response_length": 768.0,
+    "clip_fraction": 0.0,
+    "uninformative_fraction": 0.0
+  }
+]

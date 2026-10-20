@@ -1,0 +1,13 @@
+{
+  "name": "dr_grpo",
+  "mean_reward": 1.498908576965332,
+  "std_reward": 1.5186146431942034,
+  "mean_effective_reward": 1.4139085769653321,
+  "mean_kl": 5.951963633606283e-05,
+  "mean_entropy": 0.5684110386716202,
+  "mean_length": 290.65,
+  "std_length": 251.8198314271535,
+  "iqr_length": 441.5,
+  "eos_termination_rate": 0.915,
+  "word_limit_compliance": 1.0
+}
