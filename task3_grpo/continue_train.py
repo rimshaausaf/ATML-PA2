@@ -1,7 +1,8 @@
 from __future__ import annotations
-import argparse, json, torch, numpy as np
+import argparse, json, torch, numpy as np, gc
 from pathlib import Path
 from tqdm import tqdm
+from collections import defaultdict
 from torch.optim import AdamW
 from common.data import load_yaml, read_jsonl, repo_path, prompt_messages
 from common.logging_utils import set_seed
@@ -35,9 +36,10 @@ def run_grpo(config_path: str, output: str | None = None, updates: int | None = 
     device = next(policy.parameters()).device
     beta = float(cfg.get("kl_beta", 0.05)) 
     eps = float(cfg.get("clip_epsilon", 0.2))
-    K = int(cfg.get("group_size", 8)) # Generate K completions per prompt
+    K = int(cfg.get("group_size", 8))
     max_prompt_len = int(cfg["max_prompt_length"])
     max_resp_len = int(cfg.get("max_response_length", 768))
+    mb_size = 2 # Micro-batch size to prevent CUDA OOM
     
     metrics_history = []
     
@@ -76,28 +78,54 @@ def run_grpo(config_path: str, output: str | None = None, updates: int | None = 
             r_text = tokenizer.decode(resp_ids[b, :valid_len], skip_special_tokens=True)
             rm_texts.append(reward_tokenizer.apply_chat_template(msg + [{"role": "assistant", "content": r_text}], tokenize=False))
         
+        eff_rewards = []
         with torch.no_grad():
-            rm_enc = reward_tokenizer(rm_texts, return_tensors="pt", padding=True, truncation=True, max_length=1280).to(device)
-            rm_scores = reward_model(**rm_enc).logits.squeeze(-1).float()
-            eos_pen = float(cfg.get("missing_eos_penalty", 1.0))
-            eff_rewards = rm_scores - torch.tensor([0.0 if f else eos_pen for f in term_flags], device=device)
+            for i in range(0, B, mb_size):
+                mb_texts = rm_texts[i:i+mb_size]
+                mb_flags = term_flags[i:i+mb_size]
+                rm_enc = reward_tokenizer(mb_texts, return_tensors="pt", padding=True, truncation=True, max_length=1280).to(device)
+                rm_scores = reward_model(**rm_enc).logits.squeeze(-1).float()
+                if rm_scores.dim() == 0: rm_scores = rm_scores.unsqueeze(0)
+                eos_pen = float(cfg.get("missing_eos_penalty", 1.0))
+                mb_eff = rm_scores - torch.tensor([0.0 if f else eos_pen for f in mb_flags], device=device)
+                eff_rewards.append(mb_eff)
+                del rm_enc; torch.cuda.empty_cache()
+        eff_rewards = torch.cat(eff_rewards)
         
         group_ids = torch.zeros(B, dtype=torch.long, device=device) 
         adv = group_relative_advantages(eff_rewards, group_ids)
         
-        with torch.no_grad():
-            with reference_mode(policy):
-                ref_logits = policy(input_ids=gen_out, attention_mask=full_att_mask).logits
-                ref_logps = _get_logps(ref_logits, gen_out, prompt_len) * mask
-            old_logits = policy(input_ids=gen_out, attention_mask=full_att_mask).logits
-            old_logps = _get_logps(old_logits, gen_out, prompt_len) * mask
-            
         optimizer.zero_grad()
-        logits = policy(input_ids=gen_out, attention_mask=full_att_mask).logits
-        new_logps = _get_logps(logits, gen_out, prompt_len) * mask
+        accumulated_stats = defaultdict(float)
         
-        loss, stats = grpo_policy_loss(new_logps, old_logps, adv, mask, ref_logps, eps, beta, loss_type=loss_type, max_completion_length=max_resp_len)
-        loss.backward()
+        for i in range(0, B, mb_size):
+            mb_gen_out = gen_out[i:i+mb_size]
+            mb_full_att_mask = full_att_mask[i:i+mb_size]
+            mb_mask = mask[i:i+mb_size]
+            mb_adv = adv[i:i+mb_size]
+            scale = mb_gen_out.shape[0] / B
+            
+            with torch.no_grad():
+                with reference_mode(policy):
+                    mb_ref_logits = policy(input_ids=mb_gen_out, attention_mask=mb_full_att_mask).logits
+                    mb_ref_logps = _get_logps(mb_ref_logits, mb_gen_out, prompt_len) * mb_mask
+                    del mb_ref_logits
+            
+            mb_logits = policy(input_ids=mb_gen_out, attention_mask=mb_full_att_mask).logits
+            mb_new_logps = _get_logps(mb_logits, mb_gen_out, prompt_len) * mb_mask
+            
+            mb_old_logps = mb_new_logps.detach()
+            
+            mb_loss, mb_stats = grpo_policy_loss(mb_new_logps, mb_old_logps, mb_adv, mb_mask, mb_ref_logps, eps, beta, loss_type=loss_type, max_completion_length=max_resp_len)
+            
+            (mb_loss * scale).backward()
+            
+            for k, v in mb_stats.items():
+                accumulated_stats[k] += v.item() * scale
+                
+            del mb_logits, mb_new_logps, mb_old_logps, mb_ref_logps, mb_loss
+            torch.cuda.empty_cache()
+            
         grad_norm = torch.nn.utils.clip_grad_norm_(trainable_parameters(policy), 1.0)
         optimizer.step()
         
@@ -105,9 +133,9 @@ def run_grpo(config_path: str, output: str | None = None, updates: int | None = 
         
         metrics = {
             "update": update_idx + 1, "task_reward": eff_rewards.mean().item(),
-            "mean_kl": stats["sampled_kl"].item(), "policy_loss": stats["policy_term"].item(),
-            "entropy": stats["sample_entropy"].item(), "response_length": mask.sum(dim=-1).mean().item(),
-            "clip_fraction": stats["clip_fraction"].item(), "uninformative_fraction": uninfo_frac
+            "mean_kl": accumulated_stats["sampled_kl"], "policy_loss": accumulated_stats["policy_term"],
+            "entropy": accumulated_stats["sample_entropy"], "response_length": mask.sum(dim=-1).mean().item(),
+            "clip_fraction": accumulated_stats["clip_fraction"], "uninformative_fraction": uninfo_frac
         }
         metrics_history.append(metrics)
         print(f"[Update {update_idx+1:02d}/{num_updates}] Reward: {metrics['task_reward']:.3f} | KL: {metrics['mean_kl']:.4f} | Loss: {metrics['policy_loss']:.4f} | Len: {metrics['response_length']:.0f}")
@@ -117,6 +145,8 @@ def run_grpo(config_path: str, output: str | None = None, updates: int | None = 
     with open(out_dir / f"{run_name}_train_metrics.json", "w") as f: json.dump(metrics_history, f, indent=2)
     policy.save_pretrained(str(out_path))
     print(f"Saved {run_name} adapter to {out_path}")
+    
+    del policy, reward_model; gc.collect(); torch.cuda.empty_cache()
 
 def main():
     ap = argparse.ArgumentParser()
