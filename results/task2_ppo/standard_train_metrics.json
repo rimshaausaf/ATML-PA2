@@ -12,8 +12,8 @@
     "value_grad_norm": 45.3104248046875,
     "response_length": 512.0,
     "terminated_with_eos": false,
-    "step_time_sec": 30.80195450782776,
-    "wall_clock_sec": 30.801958084106445,
+    "step_time_sec": 27.611788988113403,
+    "wall_clock_sec": 27.61179256439209,
     "peak_vram_mb": 6793.076171875
   },
   {
@@ -29,8 +29,8 @@
     "value_grad_norm": 62.36506652832031,
     "response_length": 387.0,
     "terminated_with_eos": true,
-    "step_time_sec": 23.00579261779785,
-    "wall_clock_sec": 53.80780577659607,
+    "step_time_sec": 20.853046894073486,
+    "wall_clock_sec": 48.46490740776062,
     "peak_vram_mb": 6793.076171875
   },
   {
@@ -46,8 +46,8 @@
     "value_grad_norm": 37.300559997558594,
     "response_length": 356.0,
     "terminated_with_eos": true,
-    "step_time_sec": 21.111057996749878,
-    "wall_clock_sec": 74.9189350605011,
+    "step_time_sec": 19.20902943611145,
+    "wall_clock_sec": 67.67400741577148,
     "peak_vram_mb": 6793.076171875
   },
   {
@@ -63,8 +63,8 @@
     "value_grad_norm": 71.5280532836914,
     "response_length": 39.0,
     "terminated_with_eos": true,
-    "step_time_sec": 3.45859432220459,
-    "wall_clock_sec": 78.37758350372314,
+    "step_time_sec": 3.1061477661132812,
+    "wall_clock_sec": 70.78023219108582,
     "peak_vram_mb": 6793.076171875
   },
   {
@@ -80,8 +80,8 @@
     "value_grad_norm": 53.58586120605469,
     "response_length": 512.0,
     "terminated_with_eos": false,
-    "step_time_sec": 30.23763084411621,
-    "wall_clock_sec": 108.61528062820435,
+    "step_time_sec": 27.612709760665894,
+    "wall_clock_sec": 98.39299321174622,
     "peak_vram_mb": 6842.1044921875
   },
   {
@@ -97,8 +97,8 @@
     "value_grad_norm": 92.29163360595703,
     "response_length": 123.0,
     "terminated_with_eos": true,
-    "step_time_sec": 8.062044620513916,
-    "wall_clock_sec": 116.67737674713135,
+    "step_time_sec": 7.462292909622192,
+    "wall_clock_sec": 105.85536932945251,
     "peak_vram_mb": 6842.1044921875
   },
   {
@@ -114,8 +114,8 @@
     "value_grad_norm": 83.84878540039062,
     "response_length": 83.0,
     "terminated_with_eos": true,
-    "step_time_sec": 5.863887786865234,
-    "wall_clock_sec": 122.54132747650146,
+    "step_time_sec": 5.386638164520264,
+    "wall_clock_sec": 111.24208760261536,
     "peak_vram_mb": 6842.1044921875
   },
   {
@@ -131,8 +131,8 @@
     "value_grad_norm": 69.94298553466797,
     "response_length": 290.0,
     "terminated_with_eos": true,
-    "step_time_sec": 17.56645131111145,
-    "wall_clock_sec": 140.10786509513855,
+    "step_time_sec": 15.861945629119873,
+    "wall_clock_sec": 127.10411334037781,
     "peak_vram_mb": 6842.1044921875
   },
   {
@@ -148,8 +148,8 @@
     "value_grad_norm": 55.81342697143555,
     "response_length": 150.0,
     "terminated_with_eos": true,
-    "step_time_sec": 9.463898420333862,
-    "wall_clock_sec": 149.5718686580658,
+    "step_time_sec": 8.713667869567871,
+    "wall_clock_sec": 135.81783151626587,
     "peak_vram_mb": 6842.1044921875
   },
   {
@@ -165,8 +165,8 @@
     "value_grad_norm": 85.35031127929688,
     "response_length": 130.0,
     "terminated_with_eos": true,
-    "step_time_sec": 8.421018600463867,
-    "wall_clock_sec": 157.99296808242798,
+    "step_time_sec": 7.632972955703735,
+    "wall_clock_sec": 143.4508535861969,
     "peak_vram_mb": 6842.1044921875
   },
   {
@@ -182,8 +182,8 @@
     "value_grad_norm": 64.87757110595703,
     "response_length": 215.0,
     "terminated_with_eos": true,
-    "step_time_sec": 13.055992841720581,
-    "wall_clock_sec": 171.04901003837585,
+    "step_time_sec": 11.98348617553711,
+    "wall_clock_sec": 155.4344127178192,
     "peak_vram_mb": 6842.1044921875
   },
   {
@@ -199,8 +199,8 @@
     "value_grad_norm": 64.42034912109375,
     "response_length": 346.0,
     "terminated_with_eos": true,
-    "step_time_sec": 20.445767402648926,
-    "wall_clock_sec": 191.4948272705078,
+    "step_time_sec": 18.796122550964355,
+    "wall_clock_sec": 174.23059058189392,
     "peak_vram_mb": 6842.1044921875
   },
   {
@@ -216,8 +216,8 @@
     "value_grad_norm": 45.6561279296875,
     "response_length": 512.0,
     "terminated_with_eos": false,
-    "step_time_sec": 30.2300386428833,
-    "wall_clock_sec": 221.7249457836151,
+    "step_time_sec": 27.842316389083862,
+    "wall_clock_sec": 202.07297801971436,
     "peak_vram_mb": 6994.576171875
   },
   {
@@ -233,8 +233,8 @@
     "value_grad_norm": 47.487091064453125,
     "response_length": 469.0,
     "terminated_with_eos": true,
-    "step_time_sec": 27.62769627571106,
-    "wall_clock_sec": 249.35269737243652,
+    "step_time_sec": 25.169963836669922,
+    "wall_clock_sec": 227.24299025535583,
     "peak_vram_mb": 6994.576171875
   },
   {
@@ -250,8 +250,8 @@
     "value_grad_norm": 72.55369567871094,
     "response_length": 512.0,
     "terminated_with_eos": false,
-    "step_time_sec": 30.338117122650146,
-    "wall_clock_sec": 279.69089365005493,
+    "step_time_sec": 27.411449193954468,
+    "wall_clock_sec": 254.65452599525452,
     "peak_vram_mb": 6994.576171875
   },
   {
@@ -267,8 +267,8 @@
     "value_grad_norm": 36.136348724365234,
     "response_length": 473.0,
     "terminated_with_eos": true,
-    "step_time_sec": 29.049043893814087,
-    "wall_clock_sec": 308.7399950027466,
+    "step_time_sec": 26.227325677871704,
+    "wall_clock_sec": 280.88191294670105,
     "peak_vram_mb": 7363.37451171875
   },
   {
@@ -284,8 +284,8 @@
     "value_grad_norm": 74.47459411621094,
     "response_length": 510.0,
     "terminated_with_eos": true,
-    "step_time_sec": 30.430657625198364,
-    "wall_clock_sec": 339.1707429885864,
+    "step_time_sec": 27.24634575843811,
+    "wall_clock_sec": 308.12834215164185,
     "peak_vram_mb": 7363.37451171875
   },
   {
@@ -301,8 +301,8 @@
     "value_grad_norm": 47.1367073059082,
     "response_length": 79.0,
     "terminated_with_eos": true,
-    "step_time_sec": 5.7803120613098145,
-    "wall_clock_sec": 344.9511139392853,
+    "step_time_sec": 5.20715594291687,
+    "wall_clock_sec": 313.3355813026428,
     "peak_vram_mb": 7363.37451171875
   },
   {
@@ -318,8 +318,8 @@
     "value_grad_norm": 133.83676147460938,
     "response_length": 85.0,
     "terminated_with_eos": true,
-    "step_time_sec": 6.366487503051758,
-    "wall_clock_sec": 351.31765580177307,
+    "step_time_sec": 5.687304496765137,
+    "wall_clock_sec": 319.0229330062866,
     "peak_vram_mb": 7363.37451171875
   },
   {
@@ -335,8 +335,8 @@
     "value_grad_norm": 174.50396728515625,
     "response_length": 24.0,
     "terminated_with_eos": true,
-    "step_time_sec": 2.7154276371002197,
-    "wall_clock_sec": 354.03313660621643,
+    "step_time_sec": 2.347139358520508,
+    "wall_clock_sec": 321.37012338638306,
     "peak_vram_mb": 7363.37451171875
   }
 ]
