@@ -1,38 +1,21 @@
 from __future__ import annotations
-
 import torch
-
 from common.metrics import masked_mean, sampled_kl, sample_entropy
 
-
 def group_relative_advantages(rewards: torch.Tensor, group_ids: torch.Tensor, eps: float = 1e-6):
-    """Return one scalar advantage per sampled completion.
+    adv = torch.zeros_like(rewards)
+    for gid in torch.unique(group_ids):
+        mask = (group_ids == gid)
+        group_rews = rewards[mask]
+        mean = group_rews.mean()
+        std = group_rews.std(unbiased=False).clamp_min(eps)
+        if group_rews.numel() > 1:
+            adv[mask] = (group_rews - mean) / std
+        else:
+            adv[mask] = 0.0 
+    return adv
 
-    `group_ids[i]` identifies which prompt produced reward `rewards[i]`.
-    Validate this implementation against the group-relative definition in the assignment manual.
-    """
-    # Starter implementation: students must validate the grouping logic carefully.
-    mean = rewards.mean()
-    std = rewards.std(unbiased=False).clamp_min(eps)
-    return (rewards - mean) / std
-
-
-def grpo_policy_loss(
-    new_logp,
-    old_logp,
-    seq_adv,
-    token_mask,
-    ref_logp,
-    eps,
-    beta,
-    loss_type="grpo",
-    max_completion_length: int | None = None,
-):
-    """PPO-style clipped GRPO loss for already-sampled completions.
-
-    `token_mask` may be all-zero for a completion that was deliberately masked because it hit the
-    maximum generation length.
-    """
+def grpo_policy_loss(new_logp, old_logp, seq_adv, token_mask, ref_logp, eps, beta, loss_type="grpo", max_completion_length: int | None = None):
     ratio = torch.exp(new_logp - old_logp)
     adv = seq_adv[:, None]
     s1 = ratio * adv
@@ -47,7 +30,6 @@ def grpo_policy_loss(
     elif loss_type == "dr_grpo":
         if max_completion_length is None:
             raise ValueError("dr_grpo requires max_completion_length")
-        # Constant normalization rather than dividing by each response's realized length.
         per_sequence = token_sum / float(max_completion_length)
         policy_term = -per_sequence.mean()
     else:
@@ -65,7 +47,6 @@ def grpo_policy_loss(
         "ratio_mean": masked_mean(ratio.detach(), token_mask),
         "sample_entropy": sample_entropy(new_logp.detach(), token_mask),
     }
-
 
 def mask_truncated_sequences(token_mask: torch.Tensor, truncated: list[bool] | torch.Tensor):
     truncated = torch.as_tensor(truncated, device=token_mask.device, dtype=torch.bool)
