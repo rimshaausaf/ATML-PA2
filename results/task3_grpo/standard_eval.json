@@ -1,0 +1,13 @@
+{
+  "name": "standard",
+  "mean_reward": 1.5240024948120117,
+  "std_reward": 1.4786687934755383,
+  "mean_effective_reward": 1.4240024948120118,
+  "mean_kl": 0.00017312503211798004,
+  "mean_entropy": 0.5663002654188313,
+  "mean_length": 287.195,
+  "std_length": 251.60142482704666,
+  "iqr_length": 412.5,
+  "eos_termination_rate": 0.9,
+  "word_limit_compliance": 1.0
+}
