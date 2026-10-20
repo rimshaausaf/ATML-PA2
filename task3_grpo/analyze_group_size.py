@@ -31,7 +31,9 @@ def main():
     results = {}
     for k in cfg.get("group_sizes", [2, 4, 8]):
         groups = regroup_equal_generation_budget(by_prompt, k)
-        stds = [np.std([c["effective_reward"] for c in g]) for g in groups]
+        
+        stds = [np.std([c.get("effective_reward", c.get("reward", c.get("score", 0.0))) for c in g]) for g in groups]
+        
         info_rate = sum(1 for s in stds if s > 1e-6) / len(groups)
         
         results[str(k)] = {
